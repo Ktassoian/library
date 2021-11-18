@@ -7,27 +7,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
     <title>My Library</title>
 </head>
 
 <body>
     <h1>Book Library</h1>
-    <button type="button" class="btn btn-primary" id="addBook">Add Book</button>
 
-    <div id="addBookForm" style="display: none;">
-        <div class="bookFormTxtContent">
-            <input id="title" class="form-control formInput" type="text" placeholder="Book's Title">
-            <input id="author" class="form-control formInput" type="text" placeholder="Author">
-            <input id="pages" class="form-control formInput" type="number" placeholder="Number of pages in book">
-        </div>
-        <button type="button" class="btn btn-success" id="submitBook">Submit</button>
+    <div id="new-btn">
+        <button class="btn  btn-lg" type="button" id="btn">Add new Book</button>
     </div>
 
 
+    <form action="" id="book-form" style="display: none;">
+        <input class="form-control form-control-lg" name="title" type="text" placeholder="Book's Title">
+        <input class="form-control form-control-lg" name="author" type="text" placeholder="Author">
+        <input class="form-control form-control-lg col-sm" name="pages" type="number" placeholder="Number of Pages">
+        <!-- <input class="form-check-input" name="read" type="checkbox" value="" id="is-read">
+        <label class="form-check-label" for="is-read">
+            Check if you have finished the book
+        </label> -->
+        <div class="d-grid gap-2" id="submit-btn">
+            <button type="submit" class="btn btn-primary">Submit Book</button>
+        </div>
+    </form>
+
+    <div id="card">
+    </div>
+
+    <script src="./index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-<script src="./index.js"></script>
 
 </html>

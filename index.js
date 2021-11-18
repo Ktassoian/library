@@ -1,109 +1,126 @@
+// stores books
 let myLibrary = [];
-function Book(title, author, pages, read) {
+
+// new book constructor
+function Book(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
-    // this.info = function (book) {
-    //     return `${title} by ${author}, ${pages} pages, ${read}`
-    // }
+    this.isRead = isRead;
 }
-const addBook = document.getElementById("addBook");
-const submitBook = document.querySelector('#submitBook');
-const inputs = document.querySelectorAll('.formInput');
-const bookContainer = document.querySelector(".addBookForm");
 
 
-addBook.addEventListener('click', () => {
-    let form = document.querySelector(".addBookForm");
+function addBookToLibrary(title, author, pages) {
+    let newBook = new Book(title, author, pages)
+    myLibrary.push(newBook)
+    makeCard(newBook)
+}
+
+
+const bookForm = document.querySelector("#book-form");
+
+bookForm.addEventListener('submit', function (e) {
+    const title = (bookForm.elements.title);
+    const author = (bookForm.elements.author);
+    const pages = (bookForm.elements.pages);
+    addBookToLibrary(title.value, author.value, pages.value)
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    let form = document.querySelector("#book-form");
+    form.style.display = "none";
+    addBookBtn.style.display = "block";
+    e.preventDefault();
+});
+
+
+
+
+
+function makeCard(newBook) {
+    // make book container
+    const container = document.querySelector('#card');
+    // create card elements
+    let cardCol = document.createElement('div');
+    let newCard = document.createElement('div');
+    let cardBody = document.createElement('div');
+    let cardTitle = document.createElement('h4');
+    let cardAuthor = document.createElement('h6');
+    let cardPages = document.createElement('p');
+    let deleteBook = document.createElement('button');
+
+    // creates div to hold checkbox and label
+    let checkDiv = document.createElement('div');
+    let checkbox = document.createElement('input');
+    let checkboxLabel = document.createElement('label');
+
+    checkDiv.classList.add('form-check', 'form-check-inline');
+    checkbox.classList.add('form-check-input');
+    checkbox.setAttribute('type', 'checkbox')
+    checkbox.setAttribute('id', 'checkbox');
+    checkboxLabel.classList.add('form-check-label');
+    checkboxLabel.setAttribute('for', 'checkbox');
+
+    // adds a class to card elemnts 
+    cardCol.classList.add('col');
+    newCard.classList.add('card', 'h-100')
+    cardBody.classList.add('card-body');
+    cardCol.classList.add('col')
+    cardTitle.classList.add('card-title', 'text-center');
+    cardAuthor.classList.add('card-subtitle', 'mb-2', 'text-muted', 'text-center');
+    cardPages.classList.add('card-pages');
+    deleteBook.classList.add('btn', 'btn-danger', 'd-grid', 'gap-2', 'd-md-flex', 'justify-content-md-end');
+    deleteBook.setAttribute('type', 'button');
+    // create card structure 
+    container.append(cardCol);
+    cardCol.append(newCard)
+    newCard.append(cardBody);
+    cardBody.append(cardTitle);
+    cardBody.append(cardAuthor);
+    cardBody.append(cardPages);
+    cardBody.append(checkDiv);
+    checkDiv.append(checkbox);
+    checkDiv.append(checkboxLabel);
+    cardBody.append(deleteBook);
+
+    // add card data to card element 
+    cardTitle.textContent = newBook.title;
+    cardAuthor.textContent = `By: ${newBook.author}`;
+    cardPages.textContent = `pages: ${newBook.pages}`;
+    checkboxLabel.textContent = 'Done Reading'
+    deleteBook.textContent = 'Delete Book';
+    // adds functionality to button
+    deleteBook.addEventListener('click', function () {
+        newCard.remove(this);
+        myLibrary.pop(this)
+    })
+    checkbox.addEventListener('change', function () {
+
+    })
+}
+
+
+
+
+
+// displays the book form
+const addBookBtn = document.querySelector("#btn");
+addBookBtn.addEventListener('click', function () {
+    let form = document.querySelector("#book-form");
 
     if (form.style.display === "block") {
         form.style.display = "none";
     } else {
         form.style.display = "block";
-        addBook.style.display = "none";
+        addBookBtn.style.display = "none";
     }
+
 })
 
-// submitBook.addEventListener('click', addBookToLibrary);
-// title = document.getElementById("title").value
-// author = document.getElementById("author").value
-// pages = document.getElementById("pages").value
-// myLibrary.push(newBook)
-
-function getInputs() {
-    inputs.forEach(input)
-    let title = document.getElementById("title").value
-    let author = document.getElementById("author").value
-    let pages = document.getElementById("pages").value
-    submitBook.addEventListener('click', addBookToLibrary);
-    checkInputs(title, author, pages)
-}
-function checkInputs(title, author, pages) {
-    let checkInputsArr = [title, author, pages]
-    let controlArr = []
-    for (let i = 0; i < checkInputsArr.length; i++) {
-        if (!checkInputsArr[i] == '') {
-            controlArr.push(checkInputsArr[i])
-        }
-    }
-    if (controlArr.length < 3) {
-        inputs.forEach(input => {
-            if (input.value === '') {
-                input.classList.add('error')
-            }
-        })
-    } else {
-        addBookToLibrary(title, author, pages)
-
-    }
-}
-
-function addBookToLibrary(title, author, pages, read) {
-    let newBook = new Book(title, author, pages, read)
-    myLibrary.push(newBook)
-    makeNewCard()
-}
+let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false)
 
 
-function makeNewCard() {
-    for (let books in myLibrary) {
-        let newCard = document.createElement('div')
-        let cardBody = document.createElement('div')
-        let title = document.createElement('h5')
-        let author = document.createElement('h6')
-        let totalPages = document.createElement('p')
-        // let deleteButton = document.createElement('button').classList.add('btn', 'btn-danger', 'deleteButton')
-        // let toggleButton = document.createElement('button').classList.add('btn', 'btn-primary', 'toggleButton')
-
-        newCard.classList.add('card')
-        cardBody.classList.add('card-body')
-        title.classList.add('card-title')
-        author.classList.add('card-subtitle', 'mb-2', 'text-muted')
-        totalPages.classList.add('card-text')
-        // deleteButton.onclick = deleteBook
-        // toggleButton.onclick = toggleRead
-        bookContainer.appendChild(newCard)
-        newCard.appendChild(cardBody)
-        cardBody.appendChild(title)
-        cardBody.appendChild(author)
-        cardBody.appendChild(pages)
-        // cardBody.appendChild(deleteButton)
-        // cardBody.appendChild(toggleButton)
-
-        title.textContent = books.title
-        author.textContent = 'by' + books.author
-        totalPages.textContent = 'pages: ' + books.pages
-        // if (books.read) {
-        //     toggleButton.textContent = 'Read'
-        //     toggleButton.classList.add('read')
-        // } else {
-        //     toggleButton.textContent = 'Not Read'
-        //     toggleButton.classList.add('notRead')
-
-        // }
-    }
-}
+myLibrary.push(theHobbit)
 
 
 
@@ -113,9 +130,4 @@ function makeNewCard() {
 
 
 
-// const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false)
-// console.log(theHobbit.info());
 
-addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', "295", "false");
-addBookToLibrary('The subtle Art of Not Giving a F*ck', 'Mark Manson', '209', 'true');
-console.log(myLibrary)
