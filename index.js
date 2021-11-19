@@ -94,8 +94,11 @@ function makeCard(newBook) {
         newCard.remove(this);
         myLibrary.pop(this)
     })
-    checkbox.addEventListener('change', function () {
-
+    checkbox.addEventListener('input', function (e) {
+        cardBody.style.backgroundColor = '#F2F2F2';
+        cardTitle.style.color = '#6B4F4F';
+        myLibrary.pop(cardCol)
+        addBookToLibrary(this)
     })
 }
 
